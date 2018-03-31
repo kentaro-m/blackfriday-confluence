@@ -1,4 +1,7 @@
 # Blackfriday-Confluence
+[![godoc](https://img.shields.io/badge/godoc-reference-orange.svg?style=flat-square)](https://godoc.org/github.com/kentaro-m/blackfriday-confluence)
+[![license](https://img.shields.io/github/license/kentaro-m/blackfriday-confluence.svg?style=flat-square)](https://github.com/kentaro-m/blackfriday-confluence/blob/master/LICENSE.md)
+
 Blackfriday-Confluence is confluence wiki renderer for the [Blackfriday v2](https://github.com/russross/blackfriday) markdown processor.
 
 ## Features
@@ -139,4 +142,4 @@ Please use the [GitHub Issue](https://github.com/kentaro-m/blackfriday-confluenc
 Blackfriday-Confluence is inspired by [Blackfriday-LaTeX](https://github.com/Ambrevar/blackfriday-latex).
 
 ## License
-MIT
+[MIT](https://github.com/kentaro-m/blackfriday-confluence/blob/master/LICENSE.md)
