@@ -1,4 +1,5 @@
 # Blackfriday-Confluence
+[![CircleCI](https://img.shields.io/circleci/project/github/kentaro-m/blackfriday-confluence.svg?style=flat-square)](https://circleci.com/gh/kentaro-m/blackfriday-confluence)
 [![godoc](https://img.shields.io/badge/godoc-reference-orange.svg?style=flat-square)](https://godoc.org/github.com/kentaro-m/blackfriday-confluence)
 [![license](https://img.shields.io/github/license/kentaro-m/blackfriday-confluence.svg?style=flat-square)](https://github.com/kentaro-m/blackfriday-confluence/blob/master/LICENSE.md)
 
