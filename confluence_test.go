@@ -40,12 +40,12 @@ func TestBlockQuote(t *testing.T) {
 	tdt := []testData{
 		{
 			input:      "> block quote",
-			expected:   "{quote}\nblock quote\n\n{quote}\n",
+			expected:   "{quote}\nblock quote\n\n{quote}\n\n",
 			extensions: bf.CommonExtensions,
 		},
 		{
 			input:      "> block quote\n> block quote",
-			expected:   "{quote}\nblock quote\nblock quote\n\n{quote}\n",
+			expected:   "{quote}\nblock quote\nblock quote\n\n{quote}\n\n",
 			extensions: bf.CommonExtensions,
 		},
 	}
@@ -57,7 +57,7 @@ func TestCodeBlock(t *testing.T) {
 	tdt := []testData{
 		{
 			input:      "```c\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n```",
-			expected:   "{code}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n",
+			expected:   "{code}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n\n",
 			extensions: bf.CommonExtensions,
 		},
 	}
