@@ -118,8 +118,10 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 		}
 	case bf.CodeBlock:
 		r.out(w, codeTag)
+		r.cr(w)
 		w.Write(node.Literal)
 		r.out(w, codeTag)
+		r.cr(w)
 	case bf.Code:
 		break
 	case bf.Emph:

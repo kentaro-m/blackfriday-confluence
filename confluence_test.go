@@ -57,7 +57,7 @@ func TestCodeBlock(t *testing.T) {
 	tdt := []testData{
 		{
 			input:      "```c\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n```",
-			expected:   "{code}\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}",
+			expected:   "{code}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n",
 			extensions: bf.CommonExtensions,
 		},
 	}
