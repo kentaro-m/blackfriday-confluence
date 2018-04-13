@@ -81,12 +81,12 @@ func TestList(t *testing.T) {
 	tdt := []testData{
 		{
 			input:      "* list1\n* list2\n* list 3\n",
-			expected:   "* list1\n* list2\n* list 3\n",
+			expected:   "* list1\n* list2\n* list 3\n\n",
 			extensions: bf.CommonExtensions,
 		},
 		{
 			input:      "* list1\n* list2\n  * list 3\n  * list 4\n* list 5\n",
-			expected:   "* list1\n* list2\n** list 3\n** list 4\n* list 5\n",
+			expected:   "* list1\n* list2\n** list 3\n** list 4\n* list 5\n\n",
 			extensions: bf.CommonExtensions,
 		},
 	}
@@ -98,12 +98,12 @@ func TestOrderedList(t *testing.T) {
 	tdt := []testData{
 		{
 			input:      "1. list1\n1. list2\n1. list3\n",
-			expected:   "# list1\n# list2\n# list3\n",
+			expected:   "# list1\n# list2\n# list3\n\n",
 			extensions: bf.CommonExtensions,
 		},
 		{
 			input:      "1. list1\n  1. list2\n1. list3\n",
-			expected:   "# list1\n## list2\n# list3\n",
+			expected:   "# list1\n## list2\n# list3\n\n",
 			extensions: bf.CommonExtensions,
 		},
 	}

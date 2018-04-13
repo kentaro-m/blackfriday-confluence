@@ -178,6 +178,9 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 			itemLevel++
 		} else {
 			itemLevel--
+			if itemLevel == 0 {
+				r.cr(w)
+			}
 		}
 	case bf.Document:
 		break
