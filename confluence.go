@@ -40,6 +40,8 @@ var (
 	spaceBytes = []byte{' '}
 )
 
+var itemLevel = 0
+
 var confluenceEscaper = [256][]byte{
 	'*': []byte(`\*`),
 	'_': []byte(`\_`),
@@ -151,7 +153,10 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 				itemTag = olTag
 			}
 
-			r.out(w, itemTag)
+			for i := 0; i < itemLevel; i++ {
+				r.out(w, itemTag)
+			}
+
 			w.Write(spaceBytes)
 		}
 	case bf.Link:
@@ -169,14 +174,16 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 		r.out(w, hrTag)
 		r.cr(w)
 	case bf.List:
-		if !entering {
-			r.cr(w)
+		if entering {
+			itemLevel++
+		} else {
+			itemLevel--
 		}
 	case bf.Document:
 		break
 	case bf.Paragraph:
 		if !entering {
-			if !(node.Parent.Type == bf.Item && node.Next == nil) {
+			if node.Parent.Type != bf.Item {
 				r.cr(w)
 			}
 			r.cr(w)
