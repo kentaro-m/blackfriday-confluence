@@ -2,7 +2,6 @@ package confluence
 
 import (
 	"bytes"
-	// "fmt"
 	"io"
 
 	bf "gopkg.in/russross/blackfriday.v2"
@@ -12,12 +11,30 @@ import (
 type Renderer struct {
 	w bytes.Buffer
 
+	// Flags allow customizing this renderer's behavior.
+	Flags Flag
+
 	lastOutputLen int
 }
 
+// Flag control optional behavior of this renderer.
+type Flag int
+
+const (
+	// FlagsNone does not allow customizing this renderer's behavior.
+	FlagsNone Flag = 0
+
+	// InformationMacros allow using info, tip, note, and warning macros
+	InformationMacros Flag = 1 << iota
+)
+
 var (
 	quoteTag         = []byte("{quote}")
-	codeTag          = []byte("{code")
+	codeTag          = []byte("code")
+	infoTag          = []byte("info")
+	noteTag          = []byte("note")
+	tipTag           = []byte("tip")
+	warningTag       = []byte("warning")
 	imageTag         = []byte("!")
 	strongTag        = []byte("*")
 	strikethroughTag = []byte("-")
@@ -121,17 +138,58 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 			r.cr(w)
 		}
 	case bf.CodeBlock:
-		r.out(w, codeTag)
-
+		r.out(w, []byte("{"))
 		if len(node.Info) > 0 {
-			r.out(w, []byte(":"))
-			r.out(w, node.Info)
+			if r.Flags&InformationMacros != 0 {
+				language := string(node.Info)
+				switch language {
+				case "info":
+					r.out(w, infoTag)
+				case "tip":
+					r.out(w, tipTag)
+				case "note":
+					r.out(w, noteTag)
+				case "warning":
+					r.out(w, warningTag)
+				default:
+					r.out(w, []byte(codeTag))
+					r.out(w, []byte(":"))
+					r.out(w, node.Info)
+				}
+				r.out(w, []byte("}"))
+				r.cr(w)
+				w.Write(node.Literal)
+				r.out(w, []byte("{"))
+				switch language {
+				case "info":
+					r.out(w, infoTag)
+				case "tip":
+					r.out(w, tipTag)
+				case "note":
+					r.out(w, noteTag)
+				case "warning":
+					r.out(w, warningTag)
+				default:
+					r.out(w, []byte(codeTag))
+				}
+			} else {
+				r.out(w, []byte(codeTag))
+				r.out(w, []byte(":"))
+				r.out(w, node.Info)
+				r.out(w, []byte("}"))
+				r.cr(w)
+				w.Write(node.Literal)
+				r.out(w, []byte("{"))
+				r.out(w, []byte(codeTag))
+			}
+		} else {
+			r.out(w, codeTag)
+			r.out(w, []byte("}"))
+			r.cr(w)
+			w.Write(node.Literal)
+			r.out(w, []byte("{"))
+			r.out(w, codeTag)
 		}
-
-		r.out(w, []byte("}"))
-		r.cr(w)
-		w.Write(node.Literal)
-		r.out(w, codeTag)
 		r.out(w, []byte("}"))
 		r.cr(w)
 		r.cr(w)
@@ -256,7 +314,7 @@ func (r *Renderer) RenderFooter(w io.Writer, ast *bf.Node) {
 
 // Run prints out the confluence document.
 func Run(input []byte, opts ...bf.Option) []byte {
-	r := &Renderer{}
+	r := &Renderer{Flags: InformationMacros}
 	optList := []bf.Option{bf.WithRenderer(r), bf.WithExtensions(bf.CommonExtensions)}
 	optList = append(optList, opts...)
 	parser := bf.New(optList...)
