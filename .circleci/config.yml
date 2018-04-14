@@ -6,5 +6,14 @@ jobs:
     working_directory: /go/src/github.com/kentaro-m/blackfriday-confluence
     steps:
       - checkout
-      - run: go get -v -t -d ./...
-      - run: go test -v ./...
+      - run:
+          name: Install dependencies
+          command: go get -v -t -d ./...
+      - run:
+          name: Run unit tests
+          command: go test -v -cover -race -coverprofile=coverage.out ./...
+      - run:
+          name: Report coverage
+          command: |
+            go get github.com/mattn/goveralls
+            /go/bin/goveralls -coverprofile=coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
