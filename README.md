@@ -116,10 +116,7 @@ hoge
 ```
 
 ## Documentation
-
-## Todo
-- [ ] CI Support (testing, publish the package)
-- [ ] Publish the GoDoc
+[GoDoc](https://godoc.org/github.com/kentaro-m/blackfriday-confluence)
 
 ## Contributing
 
