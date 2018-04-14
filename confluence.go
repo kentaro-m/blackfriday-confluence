@@ -2,6 +2,7 @@ package confluence
 
 import (
 	"bytes"
+	// "fmt"
 	"io"
 
 	bf "gopkg.in/russross/blackfriday.v2"
@@ -16,7 +17,7 @@ type Renderer struct {
 
 var (
 	quoteTag         = []byte("{quote}")
-	codeTag          = []byte("{code}")
+	codeTag          = []byte("{code")
 	imageTag         = []byte("!")
 	strongTag        = []byte("*")
 	strikethroughTag = []byte("-")
@@ -121,9 +122,17 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 		}
 	case bf.CodeBlock:
 		r.out(w, codeTag)
+
+		if len(node.Info) > 0 {
+			r.out(w, []byte(":"))
+			r.out(w, node.Info)
+		}
+
+		r.out(w, []byte("}"))
 		r.cr(w)
 		w.Write(node.Literal)
 		r.out(w, codeTag)
+		r.out(w, []byte("}"))
 		r.cr(w)
 		r.cr(w)
 	case bf.Code:

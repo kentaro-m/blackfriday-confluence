@@ -77,6 +77,14 @@ Content Cell  | Content Cell
 |4  |5  |6  |
 ```
 
+```go
+package main
+import "fmt"
+func main() {
+    fmt.Println("hello world")
+}
+```
+
 ### Output
 ```
 h1. Section
@@ -88,7 +96,8 @@ Foobar.
 h3. Subsubsection
 Fuga
 
-{quote}quote
+{quote}
+quote
 
 {quote}
 
@@ -115,6 +124,16 @@ hoge
 ||a||b||c||
 |1|2|3|
 |4|5|6|
+```
+
+```
+{code:go}
+package main
+import "fmt"
+func main() {
+    fmt.Println("hello world")
+}
+{code}
 ```
 
 ## Documentation
