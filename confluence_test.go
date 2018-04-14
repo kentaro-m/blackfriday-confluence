@@ -56,8 +56,13 @@ func TestBlockQuote(t *testing.T) {
 func TestCodeBlock(t *testing.T) {
 	tdt := []testData{
 		{
-			input:      "```c\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n```",
+			input:      "```\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n```",
 			expected:   "{code}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n\n",
+			extensions: bf.CommonExtensions,
+		},
+		{
+			input:      "```c\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n```",
+			expected:   "{code:c}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n\n",
 			extensions: bf.CommonExtensions,
 		},
 	}
