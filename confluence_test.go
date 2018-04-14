@@ -10,12 +10,13 @@ import (
 type testData struct {
 	input      string
 	expected   string
+	flags      bfconfluence.Flag
 	extensions bf.Extensions
 }
 
 func doTest(t *testing.T, tdt []testData) {
 	for _, v := range tdt {
-		renderer := &bfconfluence.Renderer{}
+		renderer := &bfconfluence.Renderer{Flags: v.flags}
 		md := bf.New(bf.WithRenderer(renderer), bf.WithExtensions(v.extensions))
 		ast := md.Parse([]byte(v.input))
 		output := string(renderer.Render(ast))
@@ -63,6 +64,36 @@ func TestCodeBlock(t *testing.T) {
 		{
 			input:      "```c\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n```",
 			expected:   "{code:c}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n\n",
+			extensions: bf.CommonExtensions,
+		},
+		{
+			input:      "```c\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n```",
+			expected:   "{code:c}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n\n",
+			flags:      bfconfluence.InformationMacros,
+			extensions: bf.CommonExtensions,
+		},
+		{
+			input:      "```tip\n\nhighlighting tip\n```",
+			expected:   "{tip}\n\nhighlighting tip\n{tip}\n\n",
+			flags:      bfconfluence.InformationMacros,
+			extensions: bf.CommonExtensions,
+		},
+		{
+			input:      "```note\n\nhighlighting note\n```",
+			expected:   "{note}\n\nhighlighting note\n{note}\n\n",
+			flags:      bfconfluence.InformationMacros,
+			extensions: bf.CommonExtensions,
+		},
+		{
+			input:      "```warning\n\nhighlighting warning\n```",
+			expected:   "{warning}\n\nhighlighting warning\n{warning}\n\n",
+			flags:      bfconfluence.InformationMacros,
+			extensions: bf.CommonExtensions,
+		},
+		{
+			input:      "```info\n\nhighlighting infomation\n```",
+			expected:   "{info}\n\nhighlighting infomation\n{info}\n\n",
+			flags:      bfconfluence.InformationMacros,
 			extensions: bf.CommonExtensions,
 		},
 	}
