@@ -291,6 +291,8 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 				r.cr(w)
 			}
 		}
+	default:
+		panic("Unknown node type " + node.Type.String())
 	}
 	return bf.GoToNext
 }
