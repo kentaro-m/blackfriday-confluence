@@ -194,7 +194,9 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 		r.cr(w)
 		r.cr(w)
 	case bf.Code:
-		break
+		r.out(w, []byte("{{"))
+		r.esc(w, node.Literal)
+		r.out(w, []byte("}}"))
 	case bf.Emph:
 		r.out(w, emTag)
 	case bf.Heading:
