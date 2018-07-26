@@ -54,6 +54,18 @@ func TestBlockQuote(t *testing.T) {
 	doTest(t, tdt)
 }
 
+func TestCode(t *testing.T) {
+	tdt := []testData{
+		{
+			input:      "this is `foo`.",
+			expected:   "this is {{foo}}.\n\n",
+			extensions: bf.CommonExtensions,
+		},
+	}
+
+	doTest(t, tdt)
+}
+
 func TestCodeBlock(t *testing.T) {
 	tdt := []testData{
 		{
