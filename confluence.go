@@ -253,6 +253,10 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 		}
 	case bf.Document:
 		break
+	case bf.HTMLBlock:
+		break
+	case bf.HTMLSpan:
+		break
 	case bf.Paragraph:
 		if !entering {
 			if node.Parent.Type != bf.Item {
