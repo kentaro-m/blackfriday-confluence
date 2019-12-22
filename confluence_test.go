@@ -22,7 +22,7 @@ func doTest(t *testing.T, tdt []testData) {
 		output := string(renderer.Render(ast))
 
 		if output != v.expected {
-			t.Errorf("got:%v\nwant:%v", output, v.expected)
+			t.Errorf("got:%#v\nwant:%#v", output, v.expected)
 		}
 	}
 }
@@ -257,6 +257,24 @@ func TestEsc(t *testing.T) {
 		{
 			input:      "*-_+",
 			expected:   "\\*\\-\\_\\+",
+			extensions: bf.CommonExtensions,
+		},
+	}
+
+	doTest(t, tdt)
+}
+
+func TestMacros(t *testing.T) {
+	tdt := []testData{
+		{
+			input:      "This page displays a list of children\n{children:reverse=true|sort=creation|style=h4|page=Home|all=true}",
+			expected:   "This page displays a list of children\n{children:reverse=true|sort=creation|style=h4|page=Home|all=true}",
+			flags:      bfconfluence.IgnoreMacroEscaping,
+			extensions: bf.CommonExtensions,
+		},
+		{
+			input:      "This page contains some random use of {this}",
+			expected:   "This page contains some random use of \\{this}",
 			extensions: bf.CommonExtensions,
 		},
 	}

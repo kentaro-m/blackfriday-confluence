@@ -24,8 +24,12 @@ const (
 	// FlagsNone does not allow customizing this renderer's behavior.
 	FlagsNone Flag = 0
 
-	// InformationMacros allow using info, tip, note, and warning macros
+	// InformationMacros allow using info, tip, note, and warning macros.
 	InformationMacros Flag = 1 << iota
+
+	// IgnoreMacroEscaping will not escape any text that contains starts with `{`
+	// in a block of text.
+	IgnoreMacroEscaping
 )
 
 var (
@@ -79,6 +83,13 @@ func (r *Renderer) esc(w io.Writer, text []byte) {
 	var start, end int
 	for end < len(text) {
 		if escSeq := confluenceEscaper[text[end]]; escSeq != nil {
+
+			// do not escape blocks that start with `{` if request.
+			// this will allow people to declare macros in `wiki` format.
+			if r.Flags&IgnoreMacroEscaping != 0 && text[end] == '{' {
+				escSeq = escSeq[1:]
+			}
+
 			w.Write(text[start:end])
 			w.Write(escSeq)
 			start = end + 1
