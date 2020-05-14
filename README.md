@@ -19,7 +19,7 @@ $ go get -u github.com/kentaro-m/blackfriday-confluence
 ## Usage
 ```go
 import (
-  bf "gopkg.in/russross/blackfriday.v2"
+  bf "github.com/russross/blackfriday/v2"
   bfconfluence "github.com/kentaro-m/blackfriday-confluence"
 )
 

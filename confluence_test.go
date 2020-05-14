@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	bfconfluence "github.com/kentaro-m/blackfriday-confluence"
-	bf "gopkg.in/russross/blackfriday.v2"
+	bf "github.com/russross/blackfriday/v2"
 )
 
 type testData struct {
