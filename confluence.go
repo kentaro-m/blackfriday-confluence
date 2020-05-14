@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"io"
 
-	bf "gopkg.in/russross/blackfriday.v2"
+	bf "github.com/russross/blackfriday/v2"
 )
 
 // Renderer is the rendering interface for confluence wiki output.
