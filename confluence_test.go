@@ -27,6 +27,62 @@ func doTest(t *testing.T, tdt []testData) {
 	}
 }
 
+func TestParagraph(t *testing.T) {
+	tdt := []testData{
+		{input: "single paragraph", expected: "single paragraph", extensions: bf.CommonExtensions},
+		{input: `first line\
+second line`, expected: "first line\nsecond line", extensions: bf.CommonExtensions},
+		{input: `first line
+second line
+third line
+fourth line`, expected: "first line\nsecond line\nthird line\nfourth line", extensions: bf.CommonExtensions},
+		{input: `first line\
+second line
+third line\
+
+fourth line`, expected: "first line\nsecond line\nthird line\n\nfourth line", extensions: bf.CommonExtensions},
+		{input: `first line
+second line
+third line
+
+
+fourth line`, expected: "first line\nsecond line\nthird line\n\nfourth line", extensions: bf.CommonExtensions},
+		{input: `first line
+
+second line`, expected: "first line\n\nsecond line", extensions: bf.CommonExtensions},
+	}
+
+	doTest(t, tdt)
+}
+
+func TestHardLineBreak(t *testing.T) {
+	tdt := []testData{
+		{input: `first line\
+second line`, expected: "first line\nsecond line", extensions: bf.CommonExtensions | bf.HardLineBreak},
+		{input: `first line
+second line
+third line
+fourth line`, expected: "first line\nsecond line\nthird line\nfourth line", extensions: bf.CommonExtensions | bf.HardLineBreak},
+		{input: `first line\
+second line
+third line\
+
+fourth line`, expected: "first line\nsecond line\nthird line\n\nfourth line", extensions: bf.CommonExtensions | bf.HardLineBreak},
+		{input: `first line
+
+second line
+third line
+
+
+fourth line`, expected: "first line\n\nsecond line\nthird line\n\nfourth line", extensions: bf.CommonExtensions | bf.HardLineBreak},
+		{input: `first line
+ 
+second line`, expected: "first line\n\nsecond line", extensions: bf.CommonExtensions},
+	}
+
+	doTest(t, tdt)
+}
+
 func TestHeading(t *testing.T) {
 	tdt := []testData{
 		{input: "# Section\n", expected: "h1. Section\n", extensions: bf.CommonExtensions},
