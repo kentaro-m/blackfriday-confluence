@@ -76,8 +76,8 @@ third line
 
 fourth line`, expected: "first line\n\nsecond line\nthird line\n\nfourth line", extensions: bf.CommonExtensions | bf.HardLineBreak},
 		{input: `first line
- 
-second line`, expected: "first line\n\nsecond line", extensions: bf.CommonExtensions},
+
+second line`, expected: "first line\n\nsecond line", extensions: bf.CommonExtensions | bf.HardLineBreak},
 	}
 
 	doTest(t, tdt)
