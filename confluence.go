@@ -138,7 +138,7 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 	case bf.Softbreak:
 		break
 	case bf.Hardbreak:
-		break
+		w.Write(nlBytes)
 	case bf.BlockQuote:
 		if entering {
 			r.out(w, quoteTag)
@@ -270,10 +270,15 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 		break
 	case bf.Paragraph:
 		if !entering {
-			if node.Parent.Type != bf.Item {
+			if node.Next != nil && node.Next.Type == bf.Paragraph {
+				w.Write(nlBytes)
+				w.Write(nlBytes)
+			} else {
+				if node.Parent.Type != bf.Item {
+					r.cr(w)
+				}
 				r.cr(w)
 			}
-			r.cr(w)
 		}
 	case bf.Strong:
 		r.out(w, strongTag)
