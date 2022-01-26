@@ -126,7 +126,7 @@ hoge
 ```
 
 ```
-{code:go}
+{code:language=go}
 package main
 import "fmt"
 func main() {
