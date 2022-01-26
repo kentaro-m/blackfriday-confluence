@@ -131,12 +131,12 @@ func TestCodeBlock(t *testing.T) {
 		},
 		{
 			input:      "```c\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n```",
-			expected:   "{code:c}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n\n",
+			expected:   "{code:language=c}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n\n",
 			extensions: bf.CommonExtensions,
 		},
 		{
 			input:      "```c\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n```",
-			expected:   "{code:c}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n\n",
+			expected:   "{code:language=c}\n\nint main(void) {\n printf(\"Hello, world.\"); \n}\n{code}\n\n",
 			flags:      bfconfluence.InformationMacros,
 			extensions: bf.CommonExtensions,
 		},

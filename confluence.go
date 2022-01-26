@@ -164,7 +164,7 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 					r.out(w, warningTag)
 				default:
 					r.out(w, []byte(codeTag))
-					r.out(w, []byte(":"))
+					r.out(w, []byte(":language="))
 					r.out(w, node.Info)
 				}
 				r.out(w, []byte("}"))
@@ -185,7 +185,7 @@ func (r *Renderer) RenderNode(w io.Writer, node *bf.Node, entering bool) bf.Walk
 				}
 			} else {
 				r.out(w, []byte(codeTag))
-				r.out(w, []byte(":"))
+				r.out(w, []byte(":language="))
 				r.out(w, node.Info)
 				r.out(w, []byte("}"))
 				r.cr(w)
